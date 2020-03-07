@@ -17,6 +17,7 @@ public class ParkingLotTest {
     public void givenVehicle_WhenParked_ShouldReturnTrue() {
         Car car=new Car();
         boolean parkCar=parkingSystem.addParkSystem(car);
+        System.out.println(parkCar);
         Assert.assertTrue(parkCar);
     }
 
@@ -24,7 +25,16 @@ public class ParkingLotTest {
     public void givenVehicle_WhenUNParked_ShouldReturnTrue() {
         Car car=new Car();
         parkingSystem.addParkSystem(car);
-        boolean parkCar=parkingSystem.unParkSystem(car);
-        Assert.assertTrue(parkCar);
+        boolean unparkCar=parkingSystem.unParkSystem(car);
+        Assert.assertTrue(unparkCar);
+    }
+
+
+    @Test
+    public void givenVehicle_WhenAlreadyParkCar_ShouldReturnTrue() {
+        Car car=new Car();
+        parkingSystem.addParkSystem(car);
+        boolean parkCar=parkingSystem.addParkSystem(car);
+        Assert.assertFalse(parkCar);
     }
 }
