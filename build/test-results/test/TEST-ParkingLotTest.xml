@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="ParkingLotTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2020-03-28T06:00:05" hostname="rohini-BridgeLabz" time="0.003">
+<testsuite name="ParkingLotTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2020-03-28T07:24:41" hostname="rohini-BridgeLabz" time="0.01">
   <properties/>
-  <testcase name="givenParkingLotFull_ShouldReturnTrue" classname="ParkingLotTest" time="0.003"/>
-  <system-out><![CDATA[1capacity
+  <testcase name="givenVehicle_WhenUNParked_ShouldReturnTrue" classname="ParkingLotTest" time="0.01"/>
+  <system-out><![CDATA[0
+1capacity
 ]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

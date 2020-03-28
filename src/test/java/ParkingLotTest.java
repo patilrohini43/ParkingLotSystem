@@ -11,28 +11,28 @@ public class ParkingLotTest {
     ParkingSystem parkingSystem;
     ParkingOwner owner;
     Object object;
-    Car car;
+    Object vehicle;
 
     @Before
     public void setUp() {
         parkingSystem=new ParkingSystem(1);
         object=new Object();
-        car=new Car();
+        vehicle=new Object();
         owner= new ParkingOwner();
     }
 
     @Test
     public void givenVehicle_WhenParked_ShouldReturnTrue() throws ParkingLotException {
-        parkingSystem.addParkSystem(car);
-        boolean parkCar=parkingSystem.vehiclePark(car);
+        parkingSystem.addParkSystem(vehicle);
+        boolean parkCar=parkingSystem.vehiclePark(vehicle);
         System.out.println(parkCar);
         Assert.assertTrue(parkCar);
     }
 
     @Test
     public void givenVehicle_WhenUNParked_ShouldReturnTrue() throws ParkingLotException {
-        parkingSystem.addParkSystem(car);
-        boolean unparkCar=parkingSystem.unParkSystem(car);
+        parkingSystem.addParkSystem(vehicle);
+        boolean unparkCar=parkingSystem.unParkSystem(vehicle);
         Assert.assertTrue(unparkCar);
     }
 
@@ -40,7 +40,7 @@ public class ParkingLotTest {
     @Test
     public void givenVehicle_WhenAlreadyParkCar_ShouldReturnTrue() {
         try {
-            parkingSystem.addParkSystem(car);
+            parkingSystem.addParkSystem(vehicle);
             parkingSystem.addParkSystem(object);
         } catch (ParkingLotException e) {
             Assert.assertEquals("Lot already full",e.getMessage());
@@ -52,11 +52,26 @@ public class ParkingLotTest {
        parkingSystem.registerOwner(owner);
        try
        {
-           parkingSystem.addParkSystem(car);
-           parkingSystem.addParkSystem(car);
+           parkingSystem.addParkSystem(vehicle);
+           parkingSystem.addParkSystem(new Object());
        } catch (ParkingLotException e) {
             boolean capacity=owner.isCapacityFull();
             Assert.assertEquals(true,capacity);
        }
+    }
+
+    @Test
+    public void givenCapacity2_shouldbePark2vehicles(){
+        try {
+            parkingSystem.setCapacity(2);
+            parkingSystem.addParkSystem(vehicle);
+            parkingSystem.addParkSystem(object);
+            boolean park1= parkingSystem.vehiclePark(vehicle);
+            boolean park2= parkingSystem.vehiclePark(object);
+            Assert.assertTrue(park1 && park2);
+
+        } catch (ParkingLotException e) {
+            e.printStackTrace();
+        }
     }
 }
