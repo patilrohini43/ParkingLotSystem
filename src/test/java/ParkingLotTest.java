@@ -1,3 +1,4 @@
+import com.bridgelabz.parkinglot.AirportSecurity;
 import com.bridgelabz.parkinglot.ParkingOwner;
 import com.bridgelabz.parkinglot.ParkingSystem;
 import com.bridgelabz.parkinglot.exception.ParkingLotException;
@@ -48,8 +49,8 @@ public class ParkingLotTest {
     }
 
     @Test
-    public void givenParkingLotFull_ShouldReturnTrue() {
-       parkingSystem.registerOwner(owner);
+    public void givenParkingLotFull_ShouldInformtoOwnerReturnTrue() {
+       parkingSystem.registerParkingObserver(owner);
        try
        {
            parkingSystem.addParkSystem(vehicle);
@@ -72,6 +73,20 @@ public class ParkingLotTest {
 
         } catch (ParkingLotException e) {
             e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void givenParkingLotFull_ShouldInformtoAirportSecurityrReturnTrue() {
+        AirportSecurity security=new AirportSecurity();
+        parkingSystem.registerParkingObserver(security);
+        try
+        {
+            parkingSystem.addParkSystem(vehicle);
+            parkingSystem.addParkSystem(new Object());
+        } catch (ParkingLotException e) {
+            boolean capacity=security.isCapacityFull();
+            Assert.assertEquals(true,capacity);
         }
     }
 }
