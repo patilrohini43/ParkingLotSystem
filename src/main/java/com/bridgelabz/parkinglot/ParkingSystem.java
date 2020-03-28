@@ -22,6 +22,10 @@ public class ParkingSystem {
     }
 
     public void addParkSystem(Object vehicle) throws ParkingLotException {
+        if(vehiclePark(vehicle))
+        {
+            throw new ParkingLotException("Vehicle already park");
+        }
         System.out.println(this.vehicle.size());
         if(this.vehicle.size() == this.actualCapacity)
         {
@@ -31,11 +35,6 @@ public class ParkingSystem {
             }
            throw new ParkingLotException("Lot already full");
         }
-        this.currentCapacity++;
-        if(vehiclePark(vehicle))
-        {
-            throw new ParkingLotException("Vehicle already park");
-        }
         this.vehicle.add(vehicle);
     }
 
@@ -44,9 +43,14 @@ public class ParkingSystem {
         {
             return false;
         }
+        System.out.println(this.vehicle.size()+"size");
         if(this.vehicle.contains(vehicle))
         {
             this.vehicle.remove(vehicle);
+            for (ParkingObserver observer:observerList)
+            {
+                observer.spaceAvailablity();
+            }
             return true;
         }
         return false;

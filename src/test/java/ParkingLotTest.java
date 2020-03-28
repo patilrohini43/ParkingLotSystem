@@ -89,4 +89,18 @@ public class ParkingLotTest {
             Assert.assertEquals(true,capacity);
         }
     }
+
+    @Test
+    public void givenParkingLotSpaceAvaibleAfterFull_shouldBeReturnFalse() {
+        parkingSystem.registerParkingObserver(owner);
+        try
+        {
+            parkingSystem.addParkSystem(vehicle);
+            parkingSystem.addParkSystem(new Object());
+        } catch (ParkingLotException e) {
+            parkingSystem.unParkSystem(vehicle);
+            boolean capacity=owner.isSpaceAvaible();
+            Assert.assertFalse(capacity);
+        }
+    }
 }
