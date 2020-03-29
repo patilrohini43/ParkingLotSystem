@@ -123,4 +123,15 @@ public class ParkingLotTest {
             List<Integer> list=parkingSystem.getEmptyAvailableSlot();
             Assert.assertEquals(expectedList,list);
     }
+
+    @Test
+    public void givenParkingLotDriverWantToGoHome_findVehicle_ShouldbeReturnTrue() {
+        parkingSystem.registerParkingObserver(owner);
+            parkingSystem.setCapacity(2);
+            parkingSystem.listOfSlot();
+            parkingSystem.addParkSystem(0,vehicle);
+            parkingSystem.addParkSystem(1,object);
+            boolean findCar= parkingSystem.findvehicle(vehicle);
+            Assert.assertTrue(findCar);
+    }
 }

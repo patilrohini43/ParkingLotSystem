@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="ParkingLotTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2020-03-29T07:43:21" hostname="rohini-BridgeLabz" time="0.007">
+<testsuite name="ParkingLotTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2020-03-29T08:44:08" hostname="rohini-BridgeLabz" time="0.005">
   <properties/>
-  <testcase name="givenParkingLotParkingAttendent_ShouldbeReturnEmptySlot" classname="ParkingLotTest" time="0.007"/>
-  <system-out><![CDATA[4size
+  <testcase name="givenParkingLotDriverWantToGoHome_findVehicle_ShouldbeReturnTrue" classname="ParkingLotTest" time="0.005"/>
+  <system-out><![CDATA[2
+java.lang.Object@7aaa4478 0
+true
 ]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

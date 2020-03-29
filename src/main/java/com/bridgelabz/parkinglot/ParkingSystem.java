@@ -3,6 +3,7 @@ import com.bridgelabz.parkinglot.exception.ParkingLotException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Predicate;
 import java.util.stream.IntStream;
 
 
@@ -85,7 +86,6 @@ public class ParkingSystem {
 
 
     public List<Integer> getEmptyAvailableSlot() {
-        System.out.println(slotList.size()+"size");
         List<Integer> emptyListSlot=new ArrayList<>();
         for(ParkingSlot slot1:slotList)
         {
@@ -95,5 +95,16 @@ public class ParkingSystem {
             }
         }
         return emptyListSlot;
+    }
+
+    public boolean findvehicle(Object vehicle) {
+        for(ParkingSlot slot1:slotList)
+        {
+            if(slot1.getVehicle().equals(vehicle))
+            {
+                return true;
+            }
+        }
+        return false;
     }
 }
