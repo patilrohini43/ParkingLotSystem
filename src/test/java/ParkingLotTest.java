@@ -1,11 +1,17 @@
 import com.bridgelabz.parkinglot.AirportSecurity;
 import com.bridgelabz.parkinglot.ParkingOwner;
+import com.bridgelabz.parkinglot.ParkingSlot;
 import com.bridgelabz.parkinglot.ParkingSystem;
 import com.bridgelabz.parkinglot.exception.ParkingLotException;
 import com.bridgelabz.parkinglot.model.Car;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.junit.Assert.*;
 
 public class ParkingLotTest {
 
@@ -27,14 +33,14 @@ public class ParkingLotTest {
         parkingSystem.addParkSystem(vehicle);
         boolean parkCar=parkingSystem.vehiclePark(vehicle);
         System.out.println(parkCar);
-        Assert.assertTrue(parkCar);
+        assertTrue(parkCar);
     }
 
     @Test
     public void givenVehicle_WhenUNParked_ShouldReturnTrue() throws ParkingLotException {
         parkingSystem.addParkSystem(vehicle);
         boolean unparkCar=parkingSystem.unParkSystem(vehicle);
-        Assert.assertTrue(unparkCar);
+        assertTrue(unparkCar);
     }
 
 
@@ -44,7 +50,7 @@ public class ParkingLotTest {
             parkingSystem.addParkSystem(vehicle);
             parkingSystem.addParkSystem(object);
         } catch (ParkingLotException e) {
-            Assert.assertEquals("Lot already full",e.getMessage());
+            assertEquals("Lot already full",e.getMessage());
         }
     }
 
@@ -57,7 +63,7 @@ public class ParkingLotTest {
            parkingSystem.addParkSystem(new Object());
        } catch (ParkingLotException e) {
             boolean capacity=owner.isCapacityFull();
-            Assert.assertEquals(true,capacity);
+            assertEquals(true,capacity);
        }
     }
 
@@ -69,7 +75,7 @@ public class ParkingLotTest {
             parkingSystem.addParkSystem(object);
             boolean park1= parkingSystem.vehiclePark(vehicle);
             boolean park2= parkingSystem.vehiclePark(object);
-            Assert.assertTrue(park1 && park2);
+            assertTrue(park1 && park2);
 
         } catch (ParkingLotException e) {
             e.printStackTrace();
@@ -86,7 +92,7 @@ public class ParkingLotTest {
             parkingSystem.addParkSystem(new Object());
         } catch (ParkingLotException e) {
             boolean capacity=security.isCapacityFull();
-            Assert.assertEquals(true,capacity);
+            assertEquals(true,capacity);
         }
     }
 
@@ -100,7 +106,21 @@ public class ParkingLotTest {
         } catch (ParkingLotException e) {
             parkingSystem.unParkSystem(vehicle);
             boolean capacity=owner.isSpaceAvaible();
-            Assert.assertFalse(capacity);
+            assertFalse(capacity);
         }
+    }
+
+    @Test
+    public void givenParkingLotParkingAttendent_ShouldbeReturnEmptySlot() {
+            List<Integer> expectedList=new ArrayList<>();
+            expectedList.add(0);
+            expectedList.add(3);
+            parkingSystem.registerParkingObserver(owner);
+            parkingSystem.setCapacity(4);
+            parkingSystem.listOfSlot();
+            parkingSystem.addParkSystem(1,vehicle);
+            parkingSystem.addParkSystem(2,object);
+            List<Integer> list=parkingSystem.getEmptyAvailableSlot();
+            Assert.assertEquals(expectedList,list);
     }
 }

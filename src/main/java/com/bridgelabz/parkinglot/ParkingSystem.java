@@ -1,9 +1,9 @@
 package com.bridgelabz.parkinglot;
 import com.bridgelabz.parkinglot.exception.ParkingLotException;
-import com.bridgelabz.parkinglot.model.Car;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.IntStream;
 
 
 public class ParkingSystem {
@@ -11,10 +11,12 @@ public class ParkingSystem {
     private int currentCapacity;
     private int actualCapacity;
     List vehicle;
+    List<ParkingSlot> slotList;
     private List<ParkingObserver> observerList;
 
 
     public ParkingSystem(int capacity){
+        this.slotList=new ArrayList<>();
         this.vehicle=new ArrayList();
         this.currentCapacity =0;
         this.actualCapacity=capacity;
@@ -69,5 +71,29 @@ public class ParkingSystem {
 
     public void setCapacity(int capacity) {
         this.actualCapacity=capacity;
+    }
+
+    public void listOfSlot() {
+        IntStream.range(0, actualCapacity)
+                .forEach(slotNumber -> slotList.add(new ParkingSlot(slotNumber)));
+    }
+
+    public List<ParkingSlot> addParkSystem(int slot, Object vehicle) {
+        this.slotList.get(slot).setVehicle(vehicle);
+        return slotList;
+    }
+
+
+    public List<Integer> getEmptyAvailableSlot() {
+        System.out.println(slotList.size()+"size");
+        List<Integer> emptyListSlot=new ArrayList<>();
+        for(ParkingSlot slot1:slotList)
+        {
+            if(slot1.getVehicle() == null)
+            {
+                emptyListSlot.add(slot1.getSoltNumber());
+            }
+        }
+        return emptyListSlot;
     }
 }
