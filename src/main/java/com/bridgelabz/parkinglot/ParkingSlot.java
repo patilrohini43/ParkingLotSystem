@@ -1,10 +1,17 @@
 package com.bridgelabz.parkinglot;
-
+import java.sql.Time;
 import java.util.Objects;
 
 public class ParkingSlot {
     int soltNumber;
     Object vehicle;
+    long startTime;
+    long endTime;
+    Time time;
+
+    public ParkingSlot() {
+
+    }
 
     public ParkingSlot(int slotNumber) {
         this.soltNumber=slotNumber;
@@ -26,6 +33,7 @@ public class ParkingSlot {
         this.vehicle = vehicle;
     }
 
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -35,8 +43,8 @@ public class ParkingSlot {
                 Objects.equals(vehicle, that.vehicle);
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(soltNumber, vehicle);
+    public long calculateCharge() {
+        long totalTime = this.endTime - this.startTime;
+        return totalTime;
     }
 }

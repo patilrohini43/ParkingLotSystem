@@ -1,6 +1,6 @@
 package com.bridgelabz.parkinglot;
 
-public class ParkingOwner implements ParkingObserver{
+public class ParkingLotOwner implements ParkingLotObserver {
     private boolean isFullCapacity;
     private boolean isSpaceAvaible;
 
@@ -9,15 +9,19 @@ public class ParkingOwner implements ParkingObserver{
     {
         this.isFullCapacity=true;
     }
+
     public boolean isCapacityFull() {
+
         return isFullCapacity;
     }
+
     @Override
     public void spaceAvailablity() {
         this.isSpaceAvaible = false;
     }
 
-    public boolean isSpaceAvaible() {
+    public boolean isSpaceAvaible()
+    {
         return isSpaceAvaible;
     }
 }

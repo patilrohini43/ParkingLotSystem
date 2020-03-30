@@ -1,9 +1,7 @@
 import com.bridgelabz.parkinglot.AirportSecurity;
-import com.bridgelabz.parkinglot.ParkingOwner;
-import com.bridgelabz.parkinglot.ParkingSlot;
-import com.bridgelabz.parkinglot.ParkingSystem;
+import com.bridgelabz.parkinglot.ParkingLotOwner;
+import com.bridgelabz.parkinglot.ParkingLotSystem;
 import com.bridgelabz.parkinglot.exception.ParkingLotException;
-import com.bridgelabz.parkinglot.model.Car;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -15,17 +13,17 @@ import static org.junit.Assert.*;
 
 public class ParkingLotTest {
 
-    ParkingSystem parkingSystem;
-    ParkingOwner owner;
+    ParkingLotSystem parkingSystem;
+    ParkingLotOwner owner;
     Object object;
     Object vehicle;
 
     @Before
     public void setUp() {
-        parkingSystem=new ParkingSystem(1);
+        parkingSystem=new ParkingLotSystem(1);
         object=new Object();
         vehicle=new Object();
-        owner= new ParkingOwner();
+        owner= new ParkingLotOwner();
     }
 
     @Test
@@ -126,7 +124,7 @@ public class ParkingLotTest {
 
     @Test
     public void givenParkingLotDriverWantToGoHome_findVehicle_ShouldbeReturnTrue() {
-        parkingSystem.registerParkingObserver(owner);
+            parkingSystem.registerParkingObserver(owner);
             parkingSystem.setCapacity(2);
             parkingSystem.listOfSlot();
             parkingSystem.addParkSystem(0,vehicle);
@@ -134,4 +132,16 @@ public class ParkingLotTest {
             boolean findCar= parkingSystem.findvehicle(vehicle);
             Assert.assertTrue(findCar);
     }
+
+    @Test
+    public void givenParkingLotOwnerWanttoKnow_whenCarParkThenGivecharges() {
+        parkingSystem.registerParkingObserver(owner);
+        parkingSystem.setCapacity(2);
+        parkingSystem.listOfSlot();
+        parkingSystem.addParkSystem(0,vehicle);
+        parkingSystem.addParkSystem(1,object);
+        parkingSystem.unParkSystem(1,object);
+        long charge= parkingSystem.calculateCharge(); //min wise charges
+        Assert.assertEquals(2,charge);
+   }
 }

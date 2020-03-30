@@ -3,25 +3,27 @@ import com.bridgelabz.parkinglot.exception.ParkingLotException;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Predicate;
 import java.util.stream.IntStream;
 
 
-public class ParkingSystem {
+public class ParkingLotSystem {
 
     private int currentCapacity;
     private int actualCapacity;
     List vehicle;
     List<ParkingSlot> slotList;
-    private List<ParkingObserver> observerList;
+    private List<ParkingLotObserver> observerList;
+    ParkingSlot slottime;
+    int minfee = 2;
 
 
-    public ParkingSystem(int capacity){
+    public ParkingLotSystem(int capacity){
         this.slotList=new ArrayList<>();
         this.vehicle=new ArrayList();
         this.currentCapacity =0;
         this.actualCapacity=capacity;
         this.observerList=new ArrayList<>();
+        this.slottime=new ParkingSlot();
     }
 
     public void addParkSystem(Object vehicle) throws ParkingLotException {
@@ -32,7 +34,7 @@ public class ParkingSystem {
         System.out.println(this.vehicle.size());
         if(this.vehicle.size() == this.actualCapacity)
         {
-            for(ParkingObserver observer:observerList)
+            for(ParkingLotObserver observer:observerList)
             {
                 observer.capacityIsFull();
             }
@@ -50,7 +52,7 @@ public class ParkingSystem {
         if(this.vehicle.contains(vehicle))
         {
             this.vehicle.remove(vehicle);
-            for (ParkingObserver observer:observerList)
+            for (ParkingLotObserver observer:observerList)
             {
                 observer.spaceAvailablity();
             }
@@ -66,7 +68,7 @@ public class ParkingSystem {
             return false;
     }
 
-    public void registerParkingObserver(ParkingObserver observer) {
+    public void registerParkingObserver(ParkingLotObserver observer) {
        this.observerList.add(observer);
     }
 
@@ -80,7 +82,9 @@ public class ParkingSystem {
     }
 
     public List<ParkingSlot> addParkSystem(int slot, Object vehicle) {
+        System.out.println(slotList.size());
         this.slotList.get(slot).setVehicle(vehicle);
+        this.slottime.startTime=System.currentTimeMillis();
         return slotList;
     }
 
@@ -106,5 +110,17 @@ public class ParkingSystem {
             }
         }
         return false;
+    }
+
+    public void unParkSystem(int slot, Object object) {
+        this.slotList.remove(slot);
+        this.slottime.endTime=System.currentTimeMillis();
+    }
+
+    public long calculateCharge() {
+        long totalTime=this.slottime.calculateCharge();
+        System.out.println(totalTime);
+        long charge = (((totalTime / 1000) / 60) % 60) * minfee;
+        return charge;
     }
 }
