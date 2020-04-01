@@ -6,6 +6,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -134,14 +135,30 @@ public class ParkingLotTest {
     }
 
     @Test
-    public void givenParkingLotOwnerWanttoKnow_whenCarParkThenGivecharges() {
+    public void givenParkingLotOwnerWanttoKnow_whenCarParkInslot_ShouldBeReturnTime() throws ParkingLotException {
         parkingSystem.registerParkingObserver(owner);
         parkingSystem.setCapacity(2);
         parkingSystem.listOfSlot();
         parkingSystem.addParkSystem(0,vehicle);
         parkingSystem.addParkSystem(1,object);
-        parkingSystem.unParkSystem(1,object);
-        long charge= parkingSystem.calculateCharge(); //min wise charges
-        Assert.assertEquals(2,charge);
+        LocalDateTime parkTime=parkingSystem.getVehicleParkTime(0,vehicle);
+        Assert.assertEquals(LocalDateTime.now().getMinute(),parkTime.getMinute());
    }
+
+    @Test
+    public void givenParkingLotOwnerWanttoKnow_whenCarUnParkInslot_ShouldBeReturnTime() throws ParkingLotException {
+        parkingSystem.registerParkingObserver(owner);
+        parkingSystem.setCapacity(2);
+        parkingSystem.listOfSlot();
+        try {
+            parkingSystem.addParkSystem(0,vehicle);
+            parkingSystem.unParkSystem(1,object);
+        }
+        catch (ParkingLotException e)
+        {
+            Assert.assertEquals("Vehicle not Found",e.getMessage());
+        }
+    }
+
+
 }

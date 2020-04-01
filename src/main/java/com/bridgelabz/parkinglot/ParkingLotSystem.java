@@ -1,6 +1,7 @@
 package com.bridgelabz.parkinglot;
 import com.bridgelabz.parkinglot.exception.ParkingLotException;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
@@ -61,13 +62,6 @@ public class ParkingLotSystem {
         return false;
     }
 
-    public boolean vehiclePark(Object vehicle) {
-        if(this.vehicle.contains(vehicle))
-            return true;
-        else
-            return false;
-    }
-
     public void registerParkingObserver(ParkingLotObserver observer) {
        this.observerList.add(observer);
     }
@@ -84,7 +78,7 @@ public class ParkingLotSystem {
     public List<ParkingSlot> addParkSystem(int slot, Object vehicle) {
         System.out.println(slotList.size());
         this.slotList.get(slot).setVehicle(vehicle);
-        this.slottime.startTime=System.currentTimeMillis();
+        this.slotList.get(slot).setLocalDateTime(LocalDateTime.now());
         return slotList;
     }
 
@@ -112,15 +106,25 @@ public class ParkingLotSystem {
         return false;
     }
 
-    public void unParkSystem(int slot, Object object) {
-        this.slotList.remove(slot);
-        this.slottime.endTime=System.currentTimeMillis();
+    public void unParkSystem(int slot, Object object) throws ParkingLotException {
+        if(vehiclePark(object) == true)
+        {
+            this.slotList.remove(slot);
+        }
+        throw new ParkingLotException("Vehicle not Found");
     }
 
-    public long calculateCharge() {
-        long totalTime=this.slottime.calculateCharge();
-        System.out.println(totalTime);
-        long charge = (((totalTime / 1000) / 60) % 60) * minfee;
-        return charge;
+    public LocalDateTime getVehicleParkTime(int slot, Object vehicle) throws ParkingLotException {
+        if(this.slotList.get(slot).getVehicle().equals(vehicle)){
+            return this.slotList.get(slot).getLocalDateTime();
+        }
+        throw new ParkingLotException("Vehicle Not Park");
+    }
+
+    public boolean vehiclePark(Object vehicle) {
+        if(this.vehicle.contains(vehicle))
+            return true;
+        else
+            return false;
     }
 }

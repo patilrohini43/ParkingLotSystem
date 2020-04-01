@@ -1,16 +1,20 @@
 package com.bridgelabz.parkinglot;
 import java.sql.Time;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class ParkingSlot {
     int soltNumber;
     Object vehicle;
-    long startTime;
-    long endTime;
-    Time time;
+    LocalDateTime localDateTime;
 
     public ParkingSlot() {
 
+    }
+
+    public ParkingSlot(Object vehicle, LocalDateTime localDateTime) {
+        this.vehicle = vehicle;
+        this.localDateTime = localDateTime;
     }
 
     public ParkingSlot(int slotNumber) {
@@ -23,6 +27,14 @@ public class ParkingSlot {
 
     public void setSoltNumber(int soltNumber) {
         this.soltNumber = soltNumber;
+    }
+
+    public LocalDateTime getLocalDateTime() {
+        return localDateTime;
+    }
+
+    public void setLocalDateTime(LocalDateTime localDateTime) {
+        this.localDateTime = localDateTime;
     }
 
     public Object getVehicle() {
@@ -41,10 +53,5 @@ public class ParkingSlot {
         ParkingSlot that = (ParkingSlot) o;
         return soltNumber == that.soltNumber &&
                 Objects.equals(vehicle, that.vehicle);
-    }
-
-    public long calculateCharge() {
-        long totalTime = this.endTime - this.startTime;
-        return totalTime;
     }
 }
