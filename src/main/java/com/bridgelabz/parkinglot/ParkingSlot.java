@@ -8,10 +8,12 @@ public class ParkingSlot {
     Object vehicle;
     int slotnumber;
     LocalDateTime localDateTime;
+    DriverType type;
 
-    public ParkingSlot( Object vehicle, LocalDateTime now) {
+    public ParkingSlot( Object vehicle, LocalDateTime now, DriverType type) {
         this.vehicle=vehicle;
         this.localDateTime=now;
+        this.type=type;
     }
 
     public ParkingSlot(Object o) {

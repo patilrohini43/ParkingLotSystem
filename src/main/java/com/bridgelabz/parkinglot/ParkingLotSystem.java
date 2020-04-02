@@ -24,12 +24,12 @@ public class ParkingLotSystem {
     return parkingLot;
     }
 
-    public void parkVehicle(int i, Object object) throws ParkingLotException {
+    public void parkVehicle(int i, Object object, DriverType driverType) throws ParkingLotException {
         ParkingLot parkingLot= getParkingLotEmptyList();
-        parkingLot.addParkSystem(i,object);
+        parkingLot.addParkSystem(i,object,driverType);
     }
 
-    public void unparkVehicle(int i, Object object) throws ParkingLotException {
+    public void unparkVehicle(int i, Object object){
         for (ParkingLot parkingLot:parkingLotList) {
             parkingLot.unParkSystem(i, object);
             return;

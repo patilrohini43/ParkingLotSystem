@@ -17,7 +17,7 @@ public class AirportSecurity implements ParkingLotObserver {
     @Override
     public void spaceAvailablity()
     {
-        this.isSpaceAvaible = false;
+        this.isSpaceAvaible = true;
     }
 
     public boolean isSpaceAvaible()

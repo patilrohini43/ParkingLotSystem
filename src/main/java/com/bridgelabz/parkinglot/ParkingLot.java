@@ -3,6 +3,7 @@ import com.bridgelabz.parkinglot.exception.ParkingLotException;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -71,7 +72,7 @@ public class ParkingLot {
         return slotList.size();
     }
 
-    public boolean addParkSystem(int slot, Object vehicle) throws ParkingLotException {
+    public boolean addParkSystem(int slot, Object vehicle,DriverType driverType) throws ParkingLotException {
         if(slotList.contains(vehicle)){
             throw new ParkingLotException("already park");
         }
@@ -83,18 +84,24 @@ public class ParkingLot {
             }
             throw new ParkingLotException("Lot full");
         }
-        this.slotList.set(slot,new ParkingSlot(vehicle,LocalDateTime.now()));
+        this.slotList.set(slot,new ParkingSlot(vehicle,LocalDateTime.now(),driverType));
         return true;
     }
 
     private boolean idExists(Object vehicle) {
         boolean idExists = slotList.stream()
                 .anyMatch(t -> t.getVehicle().equals(vehicle));
+        System.out.println(idExists);
         return idExists;
     }
 
-    public List<Integer> getEmptyAvailableSlot() {
+    public Integer getDrivertypeWiselist(DriverType type) {
+        List<Integer> emptyList = this.getEmptyAvailableSlot();
+        int value=type.getSlotNumber(emptyList);
+        return value;
+    }
 
+    public List<Integer> getEmptyAvailableSlot() {
         List<Integer> emptyListSlot=new ArrayList<>();
         IntStream.range(0, actualCapacity)
                 .filter(slot -> slotList.get(slot) == null)
@@ -112,17 +119,17 @@ public class ParkingLot {
         throw new ParkingLotException("Vehicle Not Found");
     }
 
-    public void unParkSystem(int slot, Object object) throws ParkingLotException {
-
-        if(this.slotList.contains(object))
+    public boolean unParkSystem(int slot, Object object)  {
+        if(idExists(object))
         {
-            this.slotList.set(slot,null);
+            this.slotList.set(slot,new ParkingSlot(null));
             for (ParkingLotObserver observer:observerList)
             {
                 observer.spaceAvailablity();
             }
+            return true;
         }
-        throw new ParkingLotException("Vehicle not Found");
+        return false;
     }
 
     public LocalDateTime getVehicleParkTime(int slot, Object vehicle) throws ParkingLotException {
