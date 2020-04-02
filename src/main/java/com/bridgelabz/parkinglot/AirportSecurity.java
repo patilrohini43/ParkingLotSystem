@@ -5,7 +5,8 @@ public class AirportSecurity implements ParkingLotObserver {
     private boolean isSpaceAvaible;
 
     @Override
-    public void capacityIsFull() {
+    public void capacityIsFull()
+    {
         this.isFullCapacity = true;
     }
 
@@ -14,11 +15,13 @@ public class AirportSecurity implements ParkingLotObserver {
     }
 
     @Override
-    public void spaceAvailablity() {
+    public void spaceAvailablity()
+    {
         this.isSpaceAvaible = false;
     }
 
-    public boolean isSpaceAvaible() {
+    public boolean isSpaceAvaible()
+    {
         return isSpaceAvaible;
     }
 }

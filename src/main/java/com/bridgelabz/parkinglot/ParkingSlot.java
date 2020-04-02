@@ -4,37 +4,30 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class ParkingSlot {
-    int soltNumber;
+
     Object vehicle;
+    int slotnumber;
     LocalDateTime localDateTime;
 
-    public ParkingSlot() {
-
+    public ParkingSlot( Object vehicle, LocalDateTime now) {
+        this.vehicle=vehicle;
+        this.localDateTime=now;
     }
 
-    public ParkingSlot(Object vehicle, LocalDateTime localDateTime) {
-        this.vehicle = vehicle;
-        this.localDateTime = localDateTime;
+    public ParkingSlot(Object o) {
     }
 
     public ParkingSlot(int slotNumber) {
-        this.soltNumber=slotNumber;
+        this.slotnumber=slotNumber;
+
     }
 
-    public int getSoltNumber() {
-        return soltNumber;
+    public int getSlotnumber() {
+        return slotnumber;
     }
 
-    public void setSoltNumber(int soltNumber) {
-        this.soltNumber = soltNumber;
-    }
-
-    public LocalDateTime getLocalDateTime() {
-        return localDateTime;
-    }
-
-    public void setLocalDateTime(LocalDateTime localDateTime) {
-        this.localDateTime = localDateTime;
+    public void setSlotnumber(int slotnumber) {
+        this.slotnumber = slotnumber;
     }
 
     public Object getVehicle() {
@@ -45,13 +38,12 @@ public class ParkingSlot {
         this.vehicle = vehicle;
     }
 
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        ParkingSlot that = (ParkingSlot) o;
-        return soltNumber == that.soltNumber &&
-                Objects.equals(vehicle, that.vehicle);
+    public LocalDateTime getLocalDateTime() {
+        return localDateTime;
     }
+
+    public void setLocalDateTime(LocalDateTime localDateTime) {
+        this.localDateTime = localDateTime;
+    }
+
 }
