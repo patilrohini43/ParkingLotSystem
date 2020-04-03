@@ -8,18 +8,18 @@ import java.util.stream.Collectors;
 public enum DriverType{
 
     Handicap{
-        public int getSlotNumber(List<Integer> emptyList) {
-            int value=emptyList.stream().sorted().collect(Collectors.toList()).get(0);
+        public List getSlotNumber(List<Integer> emptyList) {
+            List value=emptyList.stream().sorted().collect(Collectors.toList());
             return value;
         }
     },Normal{
-        public int getSlotNumber(List<Integer> emptyList) {
-            int value=emptyList.stream().sorted(Collections.reverseOrder()).collect(Collectors.toList()).get(0);
+        public List getSlotNumber(List<Integer> emptyList) {
+            List value=emptyList.stream().sorted(Collections.reverseOrder()).collect(Collectors.toList());
             return value;
         }
     };
 
-        public int getSlotNumber(List<Integer> emptyList) {
-           return 0;
+        public List getSlotNumber(List<Integer> emptyList) {
+           return Collections.singletonList(0);
         }
 }

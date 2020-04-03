@@ -24,9 +24,9 @@ public class ParkingLotSystem {
     return parkingLot;
     }
 
-    public void parkVehicle(int i, Object object, DriverType driverType) throws ParkingLotException {
+    public void parkVehicle(int i, Object object, DriverType driverType, VehicleType vehicleType) throws ParkingLotException {
         ParkingLot parkingLot= getParkingLotEmptyList();
-        parkingLot.addParkSystem(i,object,driverType);
+        parkingLot.addParkSystem(i,object,driverType,vehicleType);
     }
 
     public void unparkVehicle(int i, Object object){

@@ -3,9 +3,7 @@ import com.bridgelabz.parkinglot.exception.ParkingLotException;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 
@@ -72,7 +70,7 @@ public class ParkingLot {
         return slotList.size();
     }
 
-    public boolean addParkSystem(int slot, Object vehicle,DriverType driverType) throws ParkingLotException {
+    public boolean addParkSystem(int slot, Object vehicle, DriverType driverType, VehicleType vehicleType) throws ParkingLotException {
         if(slotList.contains(vehicle)){
             throw new ParkingLotException("already park");
         }
@@ -84,7 +82,7 @@ public class ParkingLot {
             }
             throw new ParkingLotException("Lot full");
         }
-        this.slotList.set(slot,new ParkingSlot(vehicle,LocalDateTime.now(),driverType));
+        this.slotList.set(slot,new ParkingSlot(vehicle,LocalDateTime.now(),driverType,vehicleType));
         return true;
     }
 
@@ -95,14 +93,14 @@ public class ParkingLot {
         return idExists;
     }
 
-    public Integer getDrivertypeWiselist(DriverType type) {
-        List<Integer> emptyList = this.getEmptyAvailableSlot();
-        int value=type.getSlotNumber(emptyList);
-        return value;
+    public ArrayList<Integer> getDrivertypeWiselist(DriverType type,VehicleType vehicleType) {
+        ArrayList<Integer> emptyList = this.getEmptyAvailableSlot();
+        ArrayList<Integer> emptySlot= (ArrayList<Integer>) vehicleType.checkSlot(emptyList,type);
+        return emptySlot;
     }
 
-    public List<Integer> getEmptyAvailableSlot() {
-        List<Integer> emptyListSlot=new ArrayList<>();
+    public  ArrayList<Integer> getEmptyAvailableSlot() {
+        ArrayList<Integer> emptyListSlot=new ArrayList<>();
         IntStream.range(0, actualCapacity)
                 .filter(slot -> slotList.get(slot) == null)
                 .forEach(slot -> emptyListSlot.add(slot));
@@ -135,7 +133,7 @@ public class ParkingLot {
     public LocalDateTime getVehicleParkTime(int slot, Object vehicle) throws ParkingLotException {
         for(ParkingSlot slottime:slotList)
         {
-            if(slottime.getVehicle() == vehicle)
+            if(slottime.getVehicle() == vehicle && slottime.getSlotnumber() == slot)
                 return slottime.localDateTime;
         }
         throw new ParkingLotException("Vehicle Not Park");
