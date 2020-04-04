@@ -1,5 +1,8 @@
 package com.bridgelabz.parkinglot;
+import com.bridgelabz.parkinglot.enums.DriverType;
+import com.bridgelabz.parkinglot.enums.VehicleType;
 import com.bridgelabz.parkinglot.exception.ParkingLotException;
+import com.bridgelabz.parkinglot.model.Vehicle;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -23,7 +26,16 @@ public class ParkingLot {
         this.observerList=new ArrayList<>();
     }
 
-    public void addParkSystem(Object vehicle) throws ParkingLotException {
+
+    public void registerParkingObserver(ParkingLotObserver observer) {
+        this.observerList.add(observer);
+    }
+
+    public void setCapacity(int capacity) {
+        this.actualCapacity=capacity;
+    }
+
+    public void parkInSlot(Object vehicle) throws ParkingLotException {
         if(vehiclePark(vehicle))
         {
             throw new ParkingLotException("Vehicle already park");
@@ -39,7 +51,7 @@ public class ParkingLot {
         this.vehicle.add(vehicle);
     }
 
-    public boolean unParkSystem(Object vehicle) {
+    public boolean unParkInSlot(Object vehicle) {
         if(vehicle == null)
         {
             return false;
@@ -56,21 +68,13 @@ public class ParkingLot {
         return false;
     }
 
-    public void registerParkingObserver(ParkingLotObserver observer) {
-       this.observerList.add(observer);
-    }
-
-    public void setCapacity(int capacity) {
-        this.actualCapacity=capacity;
-    }
-
-    public int listOfSlot() {
+    public int parkingSlotCapacity() {
         IntStream.range(0, actualCapacity)
                 .forEach(slotNumber -> slotList.add(null));
         return slotList.size();
     }
 
-    public boolean addParkSystem(int slot, Object vehicle, DriverType driverType, VehicleType vehicleType) throws ParkingLotException {
+    public boolean parkInSlot(int slot, Vehicle vehicle, DriverType driverType, VehicleType vehicleType) throws ParkingLotException {
         if(slotList.contains(vehicle)){
             throw new ParkingLotException("already park");
         }
@@ -86,6 +90,19 @@ public class ParkingLot {
         return true;
     }
 
+    public boolean unParkInSlot(int slot, Object object)  {
+        if(idExists(object))
+        {
+            this.slotList.set(slot,new ParkingSlot(null));
+            for (ParkingLotObserver observer:observerList)
+            {
+                observer.spaceAvailablity();
+            }
+            return true;
+        }
+        return false;
+    }
+
     private boolean idExists(Object vehicle) {
         boolean idExists = slotList.stream()
                 .anyMatch(t -> t.getVehicle().equals(vehicle));
@@ -93,10 +110,8 @@ public class ParkingLot {
         return idExists;
     }
 
-    public ArrayList<Integer> getDrivertypeWiselist(DriverType type,VehicleType vehicleType) {
-        ArrayList<Integer> emptyList = this.getEmptyAvailableSlot();
-        ArrayList<Integer> emptySlot= (ArrayList<Integer>) vehicleType.checkSlot(emptyList,type);
-        return emptySlot;
+    public ArrayList<Integer> getDrivertypeWiselist(DriverType type, VehicleType vehicleType) {
+        return vehicleType.checkSlot(this.getEmptyAvailableSlot(),type);
     }
 
     public  ArrayList<Integer> getEmptyAvailableSlot() {
@@ -117,18 +132,6 @@ public class ParkingLot {
         throw new ParkingLotException("Vehicle Not Found");
     }
 
-    public boolean unParkSystem(int slot, Object object)  {
-        if(idExists(object))
-        {
-            this.slotList.set(slot,new ParkingSlot(null));
-            for (ParkingLotObserver observer:observerList)
-            {
-                observer.spaceAvailablity();
-            }
-            return true;
-        }
-        return false;
-    }
 
     public LocalDateTime getVehicleParkTime(int slot, Object vehicle) throws ParkingLotException {
         for(ParkingSlot slottime:slotList)
@@ -145,4 +148,13 @@ public class ParkingLot {
         else
             return false;
     }
+
+    public List<Integer> getLocationofCarsInSlot(String white) {
+        List<Integer> colorCarList=new ArrayList<>();
+        IntStream.range(0, actualCapacity)
+                .filter(slot -> slotList.get(slot) != null)
+                .filter(slot -> slotList.get(slot).getVehicle().getColor().equals(white))
+                .forEach(slot -> colorCarList.add(slot));
+        return colorCarList;
     }
+}

@@ -1,17 +1,19 @@
 package com.bridgelabz.parkinglot;
-import java.sql.Time;
+import com.bridgelabz.parkinglot.enums.DriverType;
+import com.bridgelabz.parkinglot.enums.VehicleType;
+import com.bridgelabz.parkinglot.model.Vehicle;
+
 import java.time.LocalDateTime;
-import java.util.Objects;
 
 public class ParkingSlot {
 
-    Object vehicle;
+    Vehicle vehicle;
     int slotnumber;
     LocalDateTime localDateTime;
     DriverType type;
     VehicleType vehicleType;
 
-    public ParkingSlot( Object vehicle, LocalDateTime now, DriverType type,VehicleType vehicleType) {
+    public ParkingSlot(Vehicle vehicle, LocalDateTime now, DriverType type, VehicleType vehicleType) {
         this.vehicle=vehicle;
         this.localDateTime=now;
         this.type=type;
@@ -23,7 +25,6 @@ public class ParkingSlot {
 
     public ParkingSlot(int slotNumber) {
         this.slotnumber=slotNumber;
-
     }
 
     public int getSlotnumber() {
@@ -34,11 +35,11 @@ public class ParkingSlot {
         this.slotnumber = slotnumber;
     }
 
-    public Object getVehicle() {
+    public Vehicle getVehicle() {
         return vehicle;
     }
 
-    public void setVehicle(Object vehicle) {
+    public void setVehicle(Vehicle vehicle) {
         this.vehicle = vehicle;
     }
 

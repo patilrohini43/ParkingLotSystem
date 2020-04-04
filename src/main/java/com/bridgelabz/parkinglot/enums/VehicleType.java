@@ -1,8 +1,8 @@
-package com.bridgelabz.parkinglot;
+package com.bridgelabz.parkinglot.enums;
 
-import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public enum VehicleType {
     SmallVehicle{
@@ -18,7 +18,6 @@ public enum VehicleType {
             ArrayList<Integer> slot = new ArrayList<>();
            for(int i=0;i<=emptySlot.size()-1;i++){
                if(emptySlot.get(i)%2==0){
-                   System.out.println(emptySlot.get(i));
                    slot.add(emptySlot.get(i));
                }
            }
@@ -26,7 +25,7 @@ public enum VehicleType {
         }
     };
 
-    public List checkSlot(ArrayList<Integer> emptyList, DriverType type) {
+    public ArrayList<Integer> checkSlot(ArrayList<Integer> emptyList, DriverType type) {
         return null;
     }
 }

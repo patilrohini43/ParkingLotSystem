@@ -1,6 +1,9 @@
 package com.bridgelabz.parkinglot;
 
+import com.bridgelabz.parkinglot.enums.DriverType;
+import com.bridgelabz.parkinglot.enums.VehicleType;
 import com.bridgelabz.parkinglot.exception.ParkingLotException;
+import com.bridgelabz.parkinglot.model.Vehicle;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -24,14 +27,14 @@ public class ParkingLotSystem {
     return parkingLot;
     }
 
-    public void parkVehicle(int i, Object object, DriverType driverType, VehicleType vehicleType) throws ParkingLotException {
+    public void parkVehicle(int i, Vehicle vehicle, DriverType driverType, VehicleType vehicleType) throws ParkingLotException {
         ParkingLot parkingLot= getParkingLotEmptyList();
-        parkingLot.addParkSystem(i,object,driverType,vehicleType);
+        parkingLot.parkInSlot(i,vehicle,driverType,vehicleType);
     }
 
     public void unparkVehicle(int i, Object object){
         for (ParkingLot parkingLot:parkingLotList) {
-            parkingLot.unParkSystem(i, object);
+            parkingLot.unParkInSlot(i, object);
             return;
         }
     }
@@ -47,6 +50,13 @@ public class ParkingLotSystem {
     public List<Integer> getParkingLotAvailableSlotList() throws ParkingLotException {
         for (ParkingLot parkingLot:parkingLotList)
           return parkingLot.getEmptyAvailableSlot();
+        throw new ParkingLotException("ParkingLot full");
+    }
+
+    public   List<Integer> getLocationOfCars(String white) throws ParkingLotException {
+        for(ParkingLot parkingLot:parkingLotList){
+           return parkingLot.getLocationofCarsInSlot(white);
+        }
         throw new ParkingLotException("ParkingLot full");
     }
 }
