@@ -179,4 +179,13 @@ public class ParkingLot {
                 .forEach(carList::add);
         return carList;
     }
+
+    public List<Integer> getVehicleByTime() {
+        List<Integer> carList=new ArrayList<>();
+        IntStream.range(0, actualCapacity)
+                .filter(slot -> slotList.get(slot) != null)
+                .filter(slot -> slotList.get(slot).getLocalDateTime().getMinute() < 30)
+                .forEach(carList::add);
+        return carList;
+    }
 }

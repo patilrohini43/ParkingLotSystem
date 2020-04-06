@@ -76,4 +76,11 @@ public class ParkingLotSystem {
         }
         throw new ParkingLotException("ParkingLot full");
     }
+
+    public List<Integer> getVehicleByTime() throws ParkingLotException {
+        for(ParkingLot parkingLot:parkingLotList){
+            return parkingLot.getVehicleByTime();
+        }
+        throw new ParkingLotException("ParkingLot full");
+    }
 }
