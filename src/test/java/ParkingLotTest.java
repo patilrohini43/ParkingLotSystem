@@ -309,6 +309,22 @@ public class ParkingLotTest {
         parkingLotSystem.parkVehicle(2,vehicle2,DriverType.Normal,VehicleType.SmallVehicle);
         List<Integer> whiteCarSlotList= parkingLotSystem.getLocationOfCars("White");
         Assert.assertEquals(whiteCarSlotList,whiteCarSlotList);
+    }
 
+    @Test
+    public void givenParkingLotSystem_policeDepartmentWantToKnowAllToyatoBlueCar() throws ParkingLotException {
+        parkingSystem.registerParkingObserver(owner);
+        parkingSystem.setCapacity(4);
+        parkingSystem.parkingSlotCapacity();
+        parkingLotSystem.add(parkingSystem);
+        Vehicle vehicle=new Vehicle(CarName.Alto,"White",5545);
+        Vehicle vehicle1=new Vehicle(CarName.HondaCity,"White",5545);
+        Vehicle vehicle2=new Vehicle(CarName.Toyato,"Blue",5545);
+        parkingLotSystem.parkVehicle(0,vehicle,DriverType.Normal,VehicleType.SmallVehicle);
+        parkingLotSystem.parkVehicle(1,vehicle1,DriverType.Normal,VehicleType.SmallVehicle);
+        parkingLotSystem.parkVehicle(2,vehicle2,DriverType.Normal,VehicleType.SmallVehicle);
+        List<Integer> carSlotList= parkingLotSystem.getByNameAndByName("Blue",CarName.Toyato);
+        System.out.println(carSlotList);
+        Assert.assertEquals(carSlotList,carSlotList);
     }
 }

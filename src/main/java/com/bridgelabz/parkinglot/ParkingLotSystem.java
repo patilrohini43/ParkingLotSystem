@@ -1,5 +1,6 @@
 package com.bridgelabz.parkinglot;
 
+import com.bridgelabz.parkinglot.enums.CarName;
 import com.bridgelabz.parkinglot.enums.DriverType;
 import com.bridgelabz.parkinglot.enums.VehicleType;
 import com.bridgelabz.parkinglot.exception.ParkingLotException;
@@ -8,6 +9,7 @@ import com.bridgelabz.parkinglot.model.Vehicle;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 public class ParkingLotSystem {
@@ -56,6 +58,13 @@ public class ParkingLotSystem {
     public   List<Integer> getLocationOfCars(String white) throws ParkingLotException {
         for(ParkingLot parkingLot:parkingLotList){
            return parkingLot.getLocationofCarsInSlot(white);
+        }
+        throw new ParkingLotException("ParkingLot full");
+    }
+
+    public List<Integer> getByNameAndByName(String color, CarName name) throws ParkingLotException {
+        for(ParkingLot parkingLot:parkingLotList){
+            return parkingLot.getLocationofCarsInSlotByNameAndColor(color,name);
         }
         throw new ParkingLotException("ParkingLot full");
     }

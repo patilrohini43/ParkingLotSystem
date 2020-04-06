@@ -22,6 +22,14 @@ public class Vehicle {
         return color;
     }
 
+    public CarName getCarName() {
+        return carName;
+    }
+
+    public void setCarName(CarName carName) {
+        this.carName = carName;
+    }
+
     public void setColor(String color) {
         this.color = color;
     }

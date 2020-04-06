@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="ParkingLotTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2020-04-04T11:40:57" hostname="rohini-BridgeLabz" time="0.033">
+<testsuite name="ParkingLotTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2020-04-06T12:38:45" hostname="rohini-BridgeLabz" time="0.032">
   <properties/>
-  <testcase name="givenParkingLotSystem_policeDepartmentWantToKnowAllWhiteCar_thenshouldReturnAllWhiteCarsLocationUsingSlotNumber" classname="ParkingLotTest" time="0.033"/>
-  <system-out><![CDATA[Vehicle{color='White', carName='Alto', numberPlate=5545}
-Vehicle{color='White', carName='HondaCity', numberPlate=5545}
-Vehicle{color='Red', carName='Alto', numberPlate=5545}
+  <testcase name="givenParkingLotSystem_policeDepartmentWantToKnowAllToyatoBlueCar" classname="ParkingLotTest" time="0.032"/>
+  <system-out><![CDATA[[2]
 ]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

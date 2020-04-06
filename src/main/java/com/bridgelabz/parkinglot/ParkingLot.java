@@ -1,4 +1,5 @@
 package com.bridgelabz.parkinglot;
+import com.bridgelabz.parkinglot.enums.CarName;
 import com.bridgelabz.parkinglot.enums.DriverType;
 import com.bridgelabz.parkinglot.enums.VehicleType;
 import com.bridgelabz.parkinglot.exception.ParkingLotException;
@@ -7,6 +8,7 @@ import com.bridgelabz.parkinglot.model.Vehicle;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Predicate;
 import java.util.stream.IntStream;
 
 
@@ -156,5 +158,14 @@ public class ParkingLot {
                 .filter(slot -> slotList.get(slot).getVehicle().getColor().equals(white))
                 .forEach(slot -> colorCarList.add(slot));
         return colorCarList;
+    }
+
+    public List<Integer> getLocationofCarsInSlotByNameAndColor(String color, CarName name) {
+        List<Integer> carList=new ArrayList<>();
+        IntStream.range(0, actualCapacity)
+                .filter(slot -> slotList.get(slot) != null)
+                .filter(slot -> slotList.get(slot).getVehicle().getColor().equals(color) && slotList.get(slot).getVehicle().getCarName().equals(name))
+                .forEach(slot -> carList.add(slot));
+        return carList;
     }
 }
