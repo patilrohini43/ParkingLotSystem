@@ -11,6 +11,7 @@ import org.junit.Test;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import static org.junit.Assert.*;
 
@@ -318,13 +319,28 @@ public class ParkingLotTest {
         parkingSystem.parkingSlotCapacity();
         parkingLotSystem.add(parkingSystem);
         Vehicle vehicle=new Vehicle(CarName.Alto,"White",5545);
-        Vehicle vehicle1=new Vehicle(CarName.HondaCity,"White",5545);
-        Vehicle vehicle2=new Vehicle(CarName.Toyato,"Blue",5545);
+        Vehicle vehicle1=new Vehicle(CarName.HondaCity,"White",1545);
+        Vehicle vehicle2=new Vehicle(CarName.Toyato,"Blue",2545);
         parkingLotSystem.parkVehicle(0,vehicle,DriverType.Normal,VehicleType.SmallVehicle);
         parkingLotSystem.parkVehicle(1,vehicle1,DriverType.Normal,VehicleType.SmallVehicle);
         parkingLotSystem.parkVehicle(2,vehicle2,DriverType.Normal,VehicleType.SmallVehicle);
-        List<Integer> carSlotList= parkingLotSystem.getByNameAndByName("Blue",CarName.Toyato);
-        System.out.println(carSlotList);
+        Map<Integer,Integer> carSlotList= parkingLotSystem.getByNameAndByColor("Blue",CarName.Toyato);
         Assert.assertEquals(carSlotList,carSlotList);
+    }
+
+    @Test
+    public void givenParkingLotSystem_policeDepartmentWantToKnowAllBMW() throws ParkingLotException {
+        parkingSystem.registerParkingObserver(owner);
+        parkingSystem.setCapacity(4);
+        parkingSystem.parkingSlotCapacity();
+        parkingLotSystem.add(parkingSystem);
+        Vehicle vehicle=new Vehicle(CarName.Bmw,"White",5545);
+        Vehicle vehicle1=new Vehicle(CarName.Bmw,"White",1545);
+        Vehicle vehicle2=new Vehicle(CarName.Toyato,"Blue",2545);
+        parkingLotSystem.parkVehicle(0,vehicle,DriverType.Normal,VehicleType.SmallVehicle);
+        parkingLotSystem.parkVehicle(1,vehicle1,DriverType.Normal,VehicleType.SmallVehicle);
+        parkingLotSystem.parkVehicle(2,vehicle2,DriverType.Normal,VehicleType.SmallVehicle);
+        List<Integer>  bmwCarSlotList= parkingLotSystem.getVehicleByName(CarName.Bmw);
+        Assert.assertEquals(bmwCarSlotList,bmwCarSlotList);
     }
 }

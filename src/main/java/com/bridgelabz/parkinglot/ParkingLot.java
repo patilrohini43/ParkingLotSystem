@@ -7,7 +7,9 @@ import com.bridgelabz.parkinglot.model.Vehicle;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Predicate;
 import java.util.stream.IntStream;
 
@@ -160,12 +162,21 @@ public class ParkingLot {
         return colorCarList;
     }
 
-    public List<Integer> getLocationofCarsInSlotByNameAndColor(String color, CarName name) {
-        List<Integer> carList=new ArrayList<>();
+    public  Map<Integer,Integer> getLocationofCarsInSlotByNameAndColor(String color, CarName name) {
+        Map<Integer,Integer> carList=new HashMap<>();
         IntStream.range(0, actualCapacity)
                 .filter(slot -> slotList.get(slot) != null)
                 .filter(slot -> slotList.get(slot).getVehicle().getColor().equals(color) && slotList.get(slot).getVehicle().getCarName().equals(name))
-                .forEach(slot -> carList.add(slot));
+                .forEach(slot -> carList.put(slot,slotList.get(slot).getVehicle().getNumberPlate()));
+        return carList;
+    }
+
+    public List<Integer> getVehicleByName(CarName carName) {
+        List<Integer> carList=new ArrayList<>();
+        IntStream.range(0, actualCapacity)
+                .filter(slot -> slotList.get(slot) != null)
+                .filter(slot -> slotList.get(slot).getVehicle().getCarName().equals(carName))
+                .forEach(carList::add);
         return carList;
     }
 }

@@ -9,6 +9,7 @@ import com.bridgelabz.parkinglot.model.Vehicle;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
@@ -62,9 +63,16 @@ public class ParkingLotSystem {
         throw new ParkingLotException("ParkingLot full");
     }
 
-    public List<Integer> getByNameAndByName(String color, CarName name) throws ParkingLotException {
+    public Map<Integer,Integer> getByNameAndByColor(String color, CarName name) throws ParkingLotException {
         for(ParkingLot parkingLot:parkingLotList){
             return parkingLot.getLocationofCarsInSlotByNameAndColor(color,name);
+        }
+        throw new ParkingLotException("ParkingLot full");
+    }
+
+    public List<Integer> getVehicleByName(CarName carName) throws ParkingLotException {
+        for(ParkingLot parkingLot:parkingLotList){
+            return parkingLot.getVehicleByName(carName);
         }
         throw new ParkingLotException("ParkingLot full");
     }

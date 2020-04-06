@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="ParkingLotTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2020-04-06T12:38:45" hostname="rohini-BridgeLabz" time="0.032">
+<testsuite name="ParkingLotTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2020-04-06T13:32:07" hostname="rohini-BridgeLabz" time="0.041">
   <properties/>
-  <testcase name="givenParkingLotSystem_policeDepartmentWantToKnowAllToyatoBlueCar" classname="ParkingLotTest" time="0.032"/>
-  <system-out><![CDATA[[2]
+  <testcase name="givenParkingLotSystem_policeDepartmentWantToKnowAllBMW" classname="ParkingLotTest" time="0.041"/>
+  <system-out><![CDATA[[0, 1]
 ]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>
