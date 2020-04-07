@@ -83,4 +83,11 @@ public class ParkingLotSystem {
         }
         throw new ParkingLotException("ParkingLot full");
     }
+
+    public List<Integer> getDriverTypeInfo(DriverType driverType, VehicleType vehicleType) throws ParkingLotException {
+        for(ParkingLot parkingLot:parkingLotList){
+            return parkingLot.getDriverTypeInfo(driverType,vehicleType);
+        }
+        throw new ParkingLotException("ParkingLot full");
+    }
 }

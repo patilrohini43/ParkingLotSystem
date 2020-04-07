@@ -188,4 +188,13 @@ public class ParkingLot {
                 .forEach(carList::add);
         return carList;
     }
+
+    public List<Integer> getDriverTypeInfo(DriverType driverType, VehicleType vehicleType) {
+        List<Integer> carList=new ArrayList<>();
+        IntStream.range(0, actualCapacity)
+                .filter(slot -> slotList.get(slot) != null)
+                .filter(slot -> slotList.get(slot).driverType.equals(driverType) && slotList.get(slot).vehicleType.equals(vehicleType))
+                .forEach(carList::add);
+        return carList;
+    }
 }
