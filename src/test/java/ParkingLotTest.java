@@ -376,4 +376,39 @@ public class ParkingLotTest {
         System.out.println(carSlotList);
         Assert.assertEquals(carSlotList,carSlotList);
     }
+
+    @Test
+    public void givenParkingLotSystem_policeDepartmentWantToKnowInformationOfCar_shouldbeReturnCarInfo() throws ParkingLotException {
+        parkingSystem.registerParkingObserver(owner);
+        parkingSystem.setCapacity(4);
+        parkingSystem.parkingSlotCapacity();
+        parkingLotSystem.add(parkingSystem);
+        Vehicle vehicle=new Vehicle(CarName.Bmw,"White",5545);
+        Vehicle vehicle1=new Vehicle(CarName.Bmw,"White",1545);
+        Vehicle vehicle2=new Vehicle(CarName.Toyato,"Blue",2545);
+        parkingLotSystem.parkVehicle(0,vehicle,DriverType.Normal,VehicleType.SmallVehicle);
+        parkingLotSystem.parkVehicle(1,vehicle1,DriverType.Normal,VehicleType.SmallVehicle);
+        parkingLotSystem.parkVehicle(2,vehicle2,DriverType.Normal,VehicleType.SmallVehicle);
+        List<Vehicle>  carSlotList= parkingLotSystem.getAllCarsParkedInParkingLot();
+        System.out.println(carSlotList);
+        Assert.assertEquals(carSlotList,carSlotList);
+    }
+
+    @Test
+    public void givenParkingLotSystem_policeDepartmentWantToKnowInformationOfCar_findCarByNumberPlate_shouldBeReturnDetailsOfCar() throws ParkingLotException {
+        parkingSystem.registerParkingObserver(owner);
+        parkingSystem.setCapacity(4);
+        parkingSystem.parkingSlotCapacity();
+        parkingLotSystem.add(parkingSystem);
+        Vehicle vehicle=new Vehicle(CarName.Bmw,"White",5545);
+        Vehicle vehicle1=new Vehicle(CarName.Bmw,"White",1545);
+        Vehicle vehicle2=new Vehicle(CarName.Toyato,"Blue",2545);
+        parkingLotSystem.parkVehicle(0,vehicle,DriverType.Normal,VehicleType.SmallVehicle);
+        parkingLotSystem.parkVehicle(1,vehicle1,DriverType.Normal,VehicleType.SmallVehicle);
+        parkingLotSystem.parkVehicle(2,vehicle2,DriverType.Normal,VehicleType.SmallVehicle);
+        parkingLotSystem.getAllCarsParkedInParkingLot();
+        Map<Integer,Vehicle> carSlotList= parkingLotSystem.getCarByNumberPlate(1545);
+        System.out.println(carSlotList);
+        Assert.assertEquals(carSlotList,carSlotList);
+    }
 }

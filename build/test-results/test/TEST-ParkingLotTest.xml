@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="ParkingLotTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2020-04-07T05:37:12" hostname="rohini-BridgeLabz" time="0.043">
+<testsuite name="ParkingLotTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2020-04-07T07:52:27" hostname="rohini-BridgeLabz" time="0.041">
   <properties/>
-  <testcase name="givenParkingLotSystem_policeDepartmentWantToKnowInformationOfHandiCap_shouldbeReturnHandicapInfo" classname="ParkingLotTest" time="0.043"/>
-  <system-out><![CDATA[[0, 2]
+  <testcase name="givenParkingLotSystem_policeDepartmentWantToKnowInformationOfCar_findCarByNumberPlate_shouldBeReturnDetailsOfCar" classname="ParkingLotTest" time="0.041"/>
+  <system-out><![CDATA[{1=Vehicle{color='White', carName='Bmw', numberPlate=1545}}
 ]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

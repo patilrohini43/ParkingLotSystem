@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 
@@ -195,6 +196,28 @@ public class ParkingLot {
                 .filter(slot -> slotList.get(slot) != null)
                 .filter(slot -> slotList.get(slot).driverType.equals(driverType) && slotList.get(slot).vehicleType.equals(vehicleType))
                 .forEach(carList::add);
+        return carList;
+    }
+
+    public List<Vehicle> getAllCarsParkedInParkingLot() {
+        List<Vehicle> vehicleList;
+        vehicleList= IntStream.range(0, actualCapacity)
+                .filter(slot -> slotList.get(slot) != null)
+                .filter(slot -> slotList.get(slot).getVehicle() != null)
+                .mapToObj(slot -> slotList.get(slot).getVehicle())
+                .collect(Collectors.toList());
+        return vehicleList;
+    }
+
+    public  Map<Integer,Vehicle>getCarByNumberPlate(int numberPlate) {
+      Map<Integer,Vehicle> carList = new HashMap<>();
+
+        IntStream.range(0, actualCapacity)
+                .filter(slot -> slotList.get(slot) != null)
+                .filter(slot -> slotList.get(slot).getVehicle().getNumberPlate() == numberPlate)
+                .forEach(slot-> {
+                    carList.put(slot, slotList.get(slot).getVehicle());
+                });
         return carList;
     }
 }

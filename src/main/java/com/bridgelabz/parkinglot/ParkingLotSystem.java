@@ -90,4 +90,18 @@ public class ParkingLotSystem {
         }
         throw new ParkingLotException("ParkingLot full");
     }
+
+    public List<Vehicle> getAllCarsParkedInParkingLot() throws ParkingLotException {
+        for(ParkingLot parkingLot:parkingLotList){
+            return parkingLot.getAllCarsParkedInParkingLot();
+        }
+        throw new ParkingLotException("ParkingLot full");
+    }
+
+    public  Map<Integer,Vehicle> getCarByNumberPlate(int numberPlate) throws ParkingLotException {
+        for(ParkingLot parkingLot:parkingLotList){
+            return parkingLot.getCarByNumberPlate(numberPlate);
+        }
+        throw new ParkingLotException("ParkingLot full");
+    }
 }

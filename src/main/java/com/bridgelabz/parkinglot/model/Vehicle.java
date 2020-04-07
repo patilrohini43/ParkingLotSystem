@@ -50,4 +50,6 @@ public class Vehicle {
                 ", numberPlate=" + numberPlate +
                 '}';
     }
+
+
 }
