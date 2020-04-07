@@ -22,33 +22,31 @@ public class ParkingSlot {
 
     public ParkingSlot(Object o) {
     }
-
-    public ParkingSlot(int slotNumber) {
-        this.slotnumber=slotNumber;
-    }
-
     public int getSlotnumber() {
         return slotnumber;
-    }
-
-    public void setSlotnumber(int slotnumber) {
-        this.slotnumber = slotnumber;
     }
 
     public Vehicle getVehicle() {
         return vehicle;
     }
 
-    public void setVehicle(Vehicle vehicle) {
-        this.vehicle = vehicle;
-    }
-
     public LocalDateTime getLocalDateTime() {
         return localDateTime;
     }
 
-    public void setLocalDateTime(LocalDateTime localDateTime) {
-        this.localDateTime = localDateTime;
+    public DriverType getDriverType() {
+        return driverType;
     }
 
+    public void setDriverType(DriverType driverType) {
+        this.driverType = driverType;
+    }
+
+    public VehicleType getVehicleType() {
+        return vehicleType;
+    }
+
+    public void setVehicleType(VehicleType vehicleType) {
+        this.vehicleType = vehicleType;
+    }
 }

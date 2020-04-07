@@ -4,12 +4,14 @@ import com.bridgelabz.parkinglot.enums.DriverType;
 import com.bridgelabz.parkinglot.enums.VehicleType;
 import com.bridgelabz.parkinglot.exception.ParkingLotException;
 import com.bridgelabz.parkinglot.model.Vehicle;
+import com.bridgelabz.parkinglot.predicate.VehiclePredicate;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.IntPredicate;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -154,51 +156,6 @@ public class ParkingLot {
             return false;
     }
 
-    public List<Integer> getLocationofCarsInSlot(String white) {
-        List<Integer> colorCarList=new ArrayList<>();
-        IntStream.range(0, actualCapacity)
-                .filter(slot -> slotList.get(slot) != null)
-                .filter(slot -> slotList.get(slot).getVehicle().getColor().equals(white))
-                .forEach(slot -> colorCarList.add(slot));
-        return colorCarList;
-    }
-
-    public  Map<Integer,Integer> getLocationofCarsInSlotByNameAndColor(String color, CarName name) {
-        Map<Integer,Integer> carList=new HashMap<>();
-        IntStream.range(0, actualCapacity)
-                .filter(slot -> slotList.get(slot) != null)
-                .filter(slot -> slotList.get(slot).getVehicle().getColor().equals(color) && slotList.get(slot).getVehicle().getCarName().equals(name))
-                .forEach(slot -> carList.put(slot,slotList.get(slot).getVehicle().getNumberPlate()));
-        return carList;
-    }
-
-    public List<Integer> getVehicleByName(CarName carName) {
-        List<Integer> carList=new ArrayList<>();
-        IntStream.range(0, actualCapacity)
-                .filter(slot -> slotList.get(slot) != null)
-                .filter(slot -> slotList.get(slot).getVehicle().getCarName().equals(carName))
-                .forEach(carList::add);
-        return carList;
-    }
-
-    public List<Integer> getVehicleByTime() {
-        List<Integer> carList=new ArrayList<>();
-        IntStream.range(0, actualCapacity)
-                .filter(slot -> slotList.get(slot) != null)
-                .filter(slot -> slotList.get(slot).getLocalDateTime().getMinute() < 30)
-                .forEach(carList::add);
-        return carList;
-    }
-
-    public List<Integer> getDriverTypeInfo(DriverType driverType, VehicleType vehicleType) {
-        List<Integer> carList=new ArrayList<>();
-        IntStream.range(0, actualCapacity)
-                .filter(slot -> slotList.get(slot) != null)
-                .filter(slot -> slotList.get(slot).driverType.equals(driverType) && slotList.get(slot).vehicleType.equals(vehicleType))
-                .forEach(carList::add);
-        return carList;
-    }
-
     public List<Vehicle> getAllCarsParkedInParkingLot() {
         List<Vehicle> vehicleList;
         vehicleList= IntStream.range(0, actualCapacity)
@@ -209,15 +166,20 @@ public class ParkingLot {
         return vehicleList;
     }
 
-    public  Map<Integer,Vehicle>getCarByNumberPlate(int numberPlate) {
-      Map<Integer,Vehicle> carList = new HashMap<>();
-
-        IntStream.range(0, actualCapacity)
+    public Map<Integer,Vehicle> filterByPredicate(IntPredicate predicate) throws ParkingLotException {
+        VehiclePredicate.listOfSlot(slotList);
+        Map<Integer,Vehicle> carList = new HashMap<>();
+                 IntStream.range(0, actualCapacity)
                 .filter(slot -> slotList.get(slot) != null)
-                .filter(slot -> slotList.get(slot).getVehicle().getNumberPlate() == numberPlate)
+                .filter(predicate)
                 .forEach(slot-> {
                     carList.put(slot, slotList.get(slot).getVehicle());
                 });
+        if(carList.isEmpty()){
+            throw new ParkingLotException("Vehicle Not Found");
+        }
         return carList;
     }
+
+
 }

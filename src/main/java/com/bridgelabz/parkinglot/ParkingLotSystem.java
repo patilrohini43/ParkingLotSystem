@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.function.IntPredicate;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
@@ -56,41 +57,6 @@ public class ParkingLotSystem {
         throw new ParkingLotException("ParkingLot full");
     }
 
-    public   List<Integer> getLocationOfCars(String white) throws ParkingLotException {
-        for(ParkingLot parkingLot:parkingLotList){
-           return parkingLot.getLocationofCarsInSlot(white);
-        }
-        throw new ParkingLotException("ParkingLot full");
-    }
-
-    public Map<Integer,Integer> getByNameAndByColor(String color, CarName name) throws ParkingLotException {
-        for(ParkingLot parkingLot:parkingLotList){
-            return parkingLot.getLocationofCarsInSlotByNameAndColor(color,name);
-        }
-        throw new ParkingLotException("ParkingLot full");
-    }
-
-    public List<Integer> getVehicleByName(CarName carName) throws ParkingLotException {
-        for(ParkingLot parkingLot:parkingLotList){
-            return parkingLot.getVehicleByName(carName);
-        }
-        throw new ParkingLotException("ParkingLot full");
-    }
-
-    public List<Integer> getVehicleByTime() throws ParkingLotException {
-        for(ParkingLot parkingLot:parkingLotList){
-            return parkingLot.getVehicleByTime();
-        }
-        throw new ParkingLotException("ParkingLot full");
-    }
-
-    public List<Integer> getDriverTypeInfo(DriverType driverType, VehicleType vehicleType) throws ParkingLotException {
-        for(ParkingLot parkingLot:parkingLotList){
-            return parkingLot.getDriverTypeInfo(driverType,vehicleType);
-        }
-        throw new ParkingLotException("ParkingLot full");
-    }
-
     public List<Vehicle> getAllCarsParkedInParkingLot() throws ParkingLotException {
         for(ParkingLot parkingLot:parkingLotList){
             return parkingLot.getAllCarsParkedInParkingLot();
@@ -98,10 +64,10 @@ public class ParkingLotSystem {
         throw new ParkingLotException("ParkingLot full");
     }
 
-    public  Map<Integer,Vehicle> getCarByNumberPlate(int numberPlate) throws ParkingLotException {
+    public  Map<Integer,Vehicle> filterByPredicate(IntPredicate predicate) throws ParkingLotException {
         for(ParkingLot parkingLot:parkingLotList){
-            return parkingLot.getCarByNumberPlate(numberPlate);
+            return parkingLot.filterByPredicate(predicate);
         }
-        throw new ParkingLotException("ParkingLot full");
+        throw new ParkingLotException("Vehicle Not Found");
     }
 }

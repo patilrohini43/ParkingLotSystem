@@ -12,7 +12,9 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.function.IntPredicate;
 
+import static com.bridgelabz.parkinglot.predicate.VehiclePredicate.*;
 import static org.junit.Assert.*;
 
 public class ParkingLotTest {
@@ -296,86 +298,6 @@ public class ParkingLotTest {
         Assert.assertEquals(parkingEmptySlots,parkingEmptySlots);
     }
 
-    @Test
-    public void givenParkingLotSystem_policeDepartmentWantToKnowAllWhiteCar_thenshouldReturnAllWhiteCarsLocationUsingSlotNumber() throws ParkingLotException {
-        parkingSystem.registerParkingObserver(owner);
-        parkingSystem.setCapacity(4);
-        parkingSystem.parkingSlotCapacity();
-        parkingLotSystem.add(parkingSystem);
-        Vehicle vehicle=new Vehicle(CarName.Alto,"White",5545);
-        Vehicle vehicle1=new Vehicle(CarName.HondaCity,"White",5545);
-        Vehicle vehicle2=new Vehicle(CarName.Alto,"Red",5545);
-        parkingLotSystem.parkVehicle(0,vehicle,DriverType.Normal,VehicleType.SmallVehicle);
-        parkingLotSystem.parkVehicle(1,vehicle1,DriverType.Normal,VehicleType.SmallVehicle);
-        parkingLotSystem.parkVehicle(2,vehicle2,DriverType.Normal,VehicleType.SmallVehicle);
-        List<Integer> whiteCarSlotList= parkingLotSystem.getLocationOfCars("White");
-        Assert.assertEquals(whiteCarSlotList,whiteCarSlotList);
-    }
-
-    @Test
-    public void givenParkingLotSystem_policeDepartmentWantToKnowAllToyatoBlueCar() throws ParkingLotException {
-        parkingSystem.registerParkingObserver(owner);
-        parkingSystem.setCapacity(4);
-        parkingSystem.parkingSlotCapacity();
-        parkingLotSystem.add(parkingSystem);
-        Vehicle vehicle=new Vehicle(CarName.Alto,"White",5545);
-        Vehicle vehicle1=new Vehicle(CarName.HondaCity,"White",1545);
-        Vehicle vehicle2=new Vehicle(CarName.Toyato,"Blue",2545);
-        parkingLotSystem.parkVehicle(0,vehicle,DriverType.Normal,VehicleType.SmallVehicle);
-        parkingLotSystem.parkVehicle(1,vehicle1,DriverType.Normal,VehicleType.SmallVehicle);
-        parkingLotSystem.parkVehicle(2,vehicle2,DriverType.Normal,VehicleType.SmallVehicle);
-        Map<Integer,Integer> carSlotList= parkingLotSystem.getByNameAndByColor("Blue",CarName.Toyato);
-        Assert.assertEquals(carSlotList,carSlotList);
-    }
-
-    @Test
-    public void givenParkingLotSystem_policeDepartmentWantToKnowAllBMW() throws ParkingLotException {
-        parkingSystem.registerParkingObserver(owner);
-        parkingSystem.setCapacity(4);
-        parkingSystem.parkingSlotCapacity();
-        parkingLotSystem.add(parkingSystem);
-        Vehicle vehicle=new Vehicle(CarName.Bmw,"White",5545);
-        Vehicle vehicle1=new Vehicle(CarName.Bmw,"White",1545);
-        Vehicle vehicle2=new Vehicle(CarName.Toyato,"Blue",2545);
-        parkingLotSystem.parkVehicle(0,vehicle,DriverType.Normal,VehicleType.SmallVehicle);
-        parkingLotSystem.parkVehicle(1,vehicle1,DriverType.Normal,VehicleType.SmallVehicle);
-        parkingLotSystem.parkVehicle(2,vehicle2,DriverType.Normal,VehicleType.SmallVehicle);
-        List<Integer>  bmwCarSlotList= parkingLotSystem.getVehicleByName(CarName.Bmw);
-        Assert.assertEquals(bmwCarSlotList,bmwCarSlotList);
-    }
-
-    @Test
-    public void givenParkingLotSystem_policeDepartmentWantToKnowAllCarParkedInLast30Min() throws ParkingLotException {
-        parkingSystem.registerParkingObserver(owner);
-        parkingSystem.setCapacity(4);
-        parkingSystem.parkingSlotCapacity();
-        parkingLotSystem.add(parkingSystem);
-        Vehicle vehicle=new Vehicle(CarName.Bmw,"White",5545);
-        Vehicle vehicle1=new Vehicle(CarName.Bmw,"White",1545);
-        Vehicle vehicle2=new Vehicle(CarName.Toyato,"Blue",2545);
-        parkingLotSystem.parkVehicle(0,vehicle,DriverType.Normal,VehicleType.SmallVehicle);
-        parkingLotSystem.parkVehicle(1,vehicle1,DriverType.Normal,VehicleType.SmallVehicle);
-        parkingLotSystem.parkVehicle(2,vehicle2,DriverType.Normal,VehicleType.SmallVehicle);
-        List<Integer>  carSlotList= parkingLotSystem.getVehicleByTime();
-        Assert.assertEquals(carSlotList,carSlotList);
-    }
-
-    @Test
-    public void givenParkingLotSystem_policeDepartmentWantToKnowInformationOfHandiCap_shouldbeReturnHandicapInfo() throws ParkingLotException {
-        parkingSystem.registerParkingObserver(owner);
-        parkingSystem.setCapacity(4);
-        parkingSystem.parkingSlotCapacity();
-        parkingLotSystem.add(parkingSystem);
-        Vehicle vehicle=new Vehicle(CarName.Bmw,"White",5545);
-        Vehicle vehicle1=new Vehicle(CarName.Bmw,"White",1545);
-        Vehicle vehicle2=new Vehicle(CarName.Toyato,"Blue",2545);
-        parkingLotSystem.parkVehicle(0,vehicle,DriverType.Handicap,VehicleType.SmallVehicle);
-        parkingLotSystem.parkVehicle(1,vehicle1,DriverType.Handicap,VehicleType.LargeVehicle);
-        parkingLotSystem.parkVehicle(2,vehicle2,DriverType.Handicap,VehicleType.SmallVehicle);
-        List<Integer>  carSlotList= parkingLotSystem.getDriverTypeInfo(DriverType.Handicap,VehicleType.SmallVehicle);
-        System.out.println(carSlotList);
-        Assert.assertEquals(carSlotList,carSlotList);
-    }
 
     @Test
     public void givenParkingLotSystem_policeDepartmentWantToKnowInformationOfCar_shouldbeReturnCarInfo() throws ParkingLotException {
@@ -390,12 +312,31 @@ public class ParkingLotTest {
         parkingLotSystem.parkVehicle(1,vehicle1,DriverType.Normal,VehicleType.SmallVehicle);
         parkingLotSystem.parkVehicle(2,vehicle2,DriverType.Normal,VehicleType.SmallVehicle);
         List<Vehicle>  carSlotList= parkingLotSystem.getAllCarsParkedInParkingLot();
-        System.out.println(carSlotList);
         Assert.assertEquals(carSlotList,carSlotList);
     }
 
     @Test
-    public void givenParkingLotSystem_policeDepartmentWantToKnowInformationOfCar_findCarByNumberPlate_shouldBeReturnDetailsOfCar() throws ParkingLotException {
+    public void givenParkingLotSystem_policeDepartmentWantToKnowAllWhiteCar_thenshouldReturnAllWhiteCarsLocationUsingSlotNumber1() {
+        parkingSystem.registerParkingObserver(owner);
+        parkingSystem.setCapacity(4);
+        parkingSystem.parkingSlotCapacity();
+        parkingLotSystem.add(parkingSystem);
+        Vehicle vehicle=new Vehicle(CarName.Alto,"White",555);
+        Vehicle vehicle1=new Vehicle(CarName.HondaCity,"White",5745);
+        Vehicle vehicle2=new Vehicle(CarName.Alto,"Red",5545);
+        try {
+            parkingLotSystem.parkVehicle(0, vehicle, DriverType.Normal, VehicleType.SmallVehicle);
+            parkingLotSystem.parkVehicle(1, vehicle1, DriverType.Normal, VehicleType.SmallVehicle);
+            parkingLotSystem.parkVehicle(2, vehicle2, DriverType.Normal, VehicleType.SmallVehicle);
+            Map<Integer,Vehicle> whiteCarSlotList = parkingLotSystem.filterByPredicate(filterBycolor("White"));
+            assertEquals(whiteCarSlotList, whiteCarSlotList);
+        }catch (ParkingLotException e){
+            Assert.assertEquals("Vehicle Not Found",e.getMessage());
+        }
+    }
+
+    @Test
+    public void givenParkingLotSystem_policeDepartmentWantToKnowAllBMW() throws ParkingLotException {
         parkingSystem.registerParkingObserver(owner);
         parkingSystem.setCapacity(4);
         parkingSystem.parkingSlotCapacity();
@@ -406,9 +347,80 @@ public class ParkingLotTest {
         parkingLotSystem.parkVehicle(0,vehicle,DriverType.Normal,VehicleType.SmallVehicle);
         parkingLotSystem.parkVehicle(1,vehicle1,DriverType.Normal,VehicleType.SmallVehicle);
         parkingLotSystem.parkVehicle(2,vehicle2,DriverType.Normal,VehicleType.SmallVehicle);
-        parkingLotSystem.getAllCarsParkedInParkingLot();
-        Map<Integer,Vehicle> carSlotList= parkingLotSystem.getCarByNumberPlate(1545);
-        System.out.println(carSlotList);
+        Map<Integer,Vehicle>  bmwCarSlotList= parkingLotSystem.filterByPredicate(filterByName(CarName.Bmw));
+        Assert.assertEquals(bmwCarSlotList,bmwCarSlotList);
+    }
+
+    @Test
+    public void givenParkingLotSystem_policeDepartmentWantToKnowAllToyatoBlueCar() throws ParkingLotException {
+        parkingSystem.registerParkingObserver(owner);
+        parkingSystem.setCapacity(4);
+        parkingSystem.parkingSlotCapacity();
+        parkingLotSystem.add(parkingSystem);
+        Vehicle vehicle=new Vehicle(CarName.Alto,"White",5545);
+        Vehicle vehicle1=new Vehicle(CarName.HondaCity,"White",1545);
+        Vehicle vehicle2=new Vehicle(CarName.Toyato,"Blue",2545);
+        parkingLotSystem.parkVehicle(0,vehicle,DriverType.Normal,VehicleType.SmallVehicle);
+        parkingLotSystem.parkVehicle(1,vehicle1,DriverType.Normal,VehicleType.SmallVehicle);
+        parkingLotSystem.parkVehicle(2,vehicle2,DriverType.Normal,VehicleType.SmallVehicle);
+        Map<Integer,Vehicle> carSlotList= parkingLotSystem.filterByPredicate(filterBycolorAndName("Blue",CarName.Toyato));
         Assert.assertEquals(carSlotList,carSlotList);
+    }
+
+    @Test
+    public void givenParkingLotSystem_policeDepartmentWantToKnowAllCarParkedInLast30Min(){
+        parkingSystem.registerParkingObserver(owner);
+        parkingSystem.setCapacity(4);
+        parkingSystem.parkingSlotCapacity();
+        parkingLotSystem.add(parkingSystem);
+        Vehicle vehicle=new Vehicle(CarName.Bmw,"White",5545);
+        Vehicle vehicle1=new Vehicle(CarName.Bmw,"White",1545);
+        Vehicle vehicle2=new Vehicle(CarName.Toyato,"Blue",2545);
+        try {
+            parkingLotSystem.parkVehicle(0, vehicle, DriverType.Normal, VehicleType.SmallVehicle);
+            parkingLotSystem.parkVehicle(1, vehicle1, DriverType.Normal, VehicleType.SmallVehicle);
+            parkingLotSystem.parkVehicle(2, vehicle2, DriverType.Normal, VehicleType.SmallVehicle);
+            Map<Integer, Vehicle> carSlotList = parkingLotSystem.filterByPredicate(filterByTime());
+            Assert.assertEquals(carSlotList, carSlotList);
+        }catch (ParkingLotException e){
+            Assert.assertEquals(e.getMessage(),e.getMessage());
+        }
+    }
+
+    @Test
+    public void givenParkingLotSystem_policeDepartmentWantToKnowInformationOfHandiCap_shouldbeReturnHandicapInfo() throws ParkingLotException {
+        parkingSystem.registerParkingObserver(owner);
+        parkingSystem.setCapacity(4);
+        parkingSystem.parkingSlotCapacity();
+        parkingLotSystem.add(parkingSystem);
+        Vehicle vehicle=new Vehicle(CarName.Bmw,"White",5545);
+        Vehicle vehicle1=new Vehicle(CarName.Bmw,"White",1545);
+        Vehicle vehicle2=new Vehicle(CarName.Toyato,"Blue",2545);
+        parkingLotSystem.parkVehicle(0,vehicle,DriverType.Handicap,VehicleType.SmallVehicle);
+        parkingLotSystem.parkVehicle(1,vehicle1,DriverType.Normal,VehicleType.SmallVehicle);
+        parkingLotSystem.parkVehicle(2,vehicle2,DriverType.Handicap,VehicleType.SmallVehicle);
+        Map<Integer,Vehicle>  carSlotList= parkingLotSystem.filterByPredicate(filterDriverTypeInfo(DriverType.Handicap,VehicleType.SmallVehicle));
+        Assert.assertEquals(carSlotList,carSlotList);
+    }
+
+    @Test
+    public void givenParkingLotSystem_policeDepartmentWantToKnowInformationOfCar_findCarByNumberPlate_shouldBeReturnDetailsOfCar() {
+        parkingSystem.registerParkingObserver(owner);
+        parkingSystem.setCapacity(4);
+        parkingSystem.parkingSlotCapacity();
+        parkingLotSystem.add(parkingSystem);
+        Vehicle vehicle=new Vehicle(CarName.Bmw,"White",5545);
+        Vehicle vehicle1=new Vehicle(CarName.Bmw,"White",1545);
+        Vehicle vehicle2=new Vehicle(CarName.Toyato,"Blue",2545);
+        try {
+            parkingLotSystem.parkVehicle(0, vehicle, DriverType.Normal, VehicleType.SmallVehicle);
+            parkingLotSystem.parkVehicle(1, vehicle1, DriverType.Normal, VehicleType.SmallVehicle);
+            parkingLotSystem.parkVehicle(2, vehicle2, DriverType.Normal, VehicleType.SmallVehicle);
+            parkingLotSystem.getAllCarsParkedInParkingLot();
+            Map<Integer, Vehicle> carSlotList = parkingLotSystem.filterByPredicate(filterCarByNumberPlate(545));
+            Assert.assertEquals(carSlotList, carSlotList);
+        }catch (ParkingLotException e){
+            Assert.assertEquals("Vehicle Not Found",e.getMessage());
+        }
     }
 }
